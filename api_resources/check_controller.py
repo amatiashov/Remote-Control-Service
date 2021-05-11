@@ -18,9 +18,11 @@ class CheckController(Resource):
 
     def get(self):
         try:
-            with open(os.path.join(RESOURCES_DIR, "response.json"), encoding="utf-8") as f:
+            template_file_name = list(_ for _ in os.listdir(RESOURCES_DIR) if _.endswith(".json")).pop()
+            self._logger.debug("Source file: %s" % template_file_name)
+            with open(os.path.join(RESOURCES_DIR, template_file_name), encoding="utf-8") as f:
                 response_template = json.loads(f.read())
-                if not response_template.get("data"):
+                if response_template.get("data") is None:
                     raise RuntimeError("Response template does not contain the 'data' field!")
                 return response_template.get("data")
         except Exception as e:
