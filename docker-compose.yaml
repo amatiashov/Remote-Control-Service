@@ -3,7 +3,7 @@ version: "3"
 
 services:
   remote-control-service:
-    build: .
+    image: amatiashov/remote-control-service
     restart: always
     ports:
       - 80:8080
